@@ -31,6 +31,7 @@ app.use(bodyParser.json({ limit: "100mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 const allowedOrigins = ["https://chirpskykite-frontend.onrender.com", "https://chirpsky.net"];
+
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
@@ -43,15 +44,16 @@ app.use(cors({
 
     return callback(null, true);
   },
-  credentials: true,
+  credentials: true, // Allow credentials
 }));
 
+// Set up additional headers to allow credentials
 app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", allowedOrigins);
-  res.header("Access-Control-Allow-Credentials", true);
+  res.header('Access-Control-Allow-Origin', allowedOrigins.join(','));
+  res.header('Access-Control-Allow-Credentials', true);
+  // Add other headers as needed
   next();
 });
-
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
