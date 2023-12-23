@@ -43,6 +43,7 @@ app.use(cors({
 
     return callback(null, true);
   },
+  credentials: true,
 }));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
