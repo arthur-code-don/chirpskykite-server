@@ -32,8 +32,7 @@ app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 const allowedOrigins = ["https://chirpsky.net", "https://chirpskykite-frontend.onrender.com"];
 app.use(cors({
-  origin: "https://chirpsky.net",
-  credentials: true
+  origin: "*",
 }));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
