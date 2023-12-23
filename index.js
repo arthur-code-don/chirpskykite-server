@@ -31,17 +31,20 @@ app.use(bodyParser.json({ limit: "100mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
 const allowedOrigins = ["https://chirpsky.net", "https://chirpskykite-frontend.onrender.com"];
+
 app.use(cors({
-  origin: "*",
+  origin: function (origin, callback) {
+    if (!origin || allowedOrigins.includes(origin)) {
+      callback(null, true);
+    } else {
+      callback(new Error("Not allowed by CORS"));
+    }
+  },
   credentials: true,
 }));
 
-app.use((req, res, next) => {
-  res.header('Access-Control-Allow-Origin', '*');
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Headers', 'Origin, X-Requested-With, Content-Type, Accept');
-  next();
-});
+// Enable preflight for all routes
+app.options("*", cors());
 
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
