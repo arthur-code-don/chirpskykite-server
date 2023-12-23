@@ -45,6 +45,13 @@ app.use(cors({
   },
   credentials: true,
 }));
+
+app.use((req, res, next) => {
+  res.header("Access-Control-Allow-Origin", allowedOrigins);
+  res.header("Access-Control-Allow-Credentials", true);
+  next();
+});
+
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
