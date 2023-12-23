@@ -29,7 +29,21 @@ app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "100mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
-app.use(cors());
+
+const allowedOrigins = ["https://chirpskykite-frontend.onrender.com", "https://chirpskykite.net"];
+app.use(cors({
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps or curl requests)
+    if (!origin) return callback(null, true);
+
+    if (allowedOrigins.indexOf(origin) === -1) {
+      const msg = "The CORS policy for this site does not allow access from the specified origin.";
+      return callback(new Error(msg), false);
+    }
+
+    return callback(null, true);
+  },
+}));
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
