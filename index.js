@@ -30,7 +30,7 @@ app.use(morgan("common"));
 app.use(bodyParser.json({ limit: "100mb", extended: true }));
 app.use(bodyParser.urlencoded({ limit: "100mb", extended: true }));
 
-const allowedOrigins = ["https://chirpskykite-frontend.onrender.com", "https://chirpskykite.net"];
+const allowedOrigins = ["https://chirpskykite-frontend.onrender.com", "https://chirpsky.net"];
 app.use(cors({
   origin: function (origin, callback) {
     // Allow requests with no origin (like mobile apps or curl requests)
