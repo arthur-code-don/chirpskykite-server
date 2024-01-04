@@ -113,7 +113,6 @@ export const addRemoveFriend = async (req, res) => {
     const user = await User.findById(id);
     const friend = await User.findById(friendId);
 
-
     if (!user || !friend) {
       return res.status(404).json({ message: "User or friend not found." });
     }
@@ -123,13 +122,20 @@ export const addRemoveFriend = async (req, res) => {
       return res.status(400).json({ message: "Invalid friendId." });
     }
 
-    if (user.friends.includes(friendId)) {
-      user.friends = user.friends.filter((id) => id !== friendId);
-      friend.friends = friend.friends.filter((friendId) => friendId !== id);
+    if (user.friends.includes(friendId) && friend.friends.includes(id)) {
+      // Remove friendId from the friends array for the current user
+      user.friends = user.friends.filter((friend) => friend.toString() !== friendId);
+
+      // Remove id from the friends array for the friend user
+      friend.friends = friend.friends.filter((friend) => friend.toString() !== id);
     } else {
+      // Add friendId to the friends array for the current user
       user.friends.push(friendId);
+
+      // Add id to the friends array for the friend user
       friend.friends.push(id);
     }
+
     await user.save();
     await friend.save();
 
@@ -146,7 +152,8 @@ export const addRemoveFriend = async (req, res) => {
   } catch (err) {
     res.status(404).json({ message: err.message });
   }
- };
+};
+
 
 // SAVE SOCIAL PROFILE URLS
 export const updateSocialProfiles = async (req, res) => {
