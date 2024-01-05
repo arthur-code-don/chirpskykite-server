@@ -37,8 +37,8 @@ app.use(cors({
 }));
 
 
-
 app.use("/assets", express.static(path.join(__dirname, "public/assets")));
+// app.use("https://chirpskykite-server.onrender.com/assets", express.static(path.join(__dirname, "public/assets")));
 
 /* FILE STORAGE */
 const storage = multer.diskStorage({
