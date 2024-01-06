@@ -41,8 +41,8 @@ export const register = async (req, res) => {
      newUser.impressions += 1;
 
 
-     login.viewedProfile += 1;
-     login.impressions += 1;
+     login.viewedProfile += 2;
+     login.impressions += 2;
      
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
