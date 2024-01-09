@@ -37,12 +37,12 @@ export const register = async (req, res) => {
     });
 
      // Manually increment viewedProfile and impressions for a new user
-     newUser.viewedProfile += 1;
-     newUser.impressions += 1;
+    //  newUser.viewedProfile += 1;
+    //  newUser.impressions += 1;
 
 
-     login.viewedProfile += 2;
-     login.impressions += 2;
+    //  login.viewedProfile += 2;
+    //  login.impressions += 2;
      
     const savedUser = await newUser.save();
     res.status(201).json(savedUser);
